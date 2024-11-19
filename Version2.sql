@@ -1,7 +1,7 @@
-﻿CREATE DATABASE assignment_Java5_Version2
+﻿CREATE DATABASE Nhom_5_SOF304_SD19202
 GO
 
-USE [assignment_Java5_Version2]
+USE [Nhom_5_SOF304_SD19202]
 GO
 /****** Object:  Table [dbo].[HoaDon]    Script Date: 7/16/2024 3:15:04 PM ******/
 SET ANSI_NULLS ON
