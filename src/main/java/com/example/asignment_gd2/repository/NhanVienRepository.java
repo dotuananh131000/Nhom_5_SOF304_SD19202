@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -21,4 +23,10 @@ public interface NhanVienRepository extends JpaRepository<NhanVien, Integer> {
     // Thêm phương thức phân trang
 
     Page<NhanVien> findAll(Pageable pageable);
+
+    public Optional<NhanVien> findByMa(String ma);
+
+    public List<NhanVien>findByTenContaining(String ten);
+
+    public List<NhanVien>findByTrangThai(Boolean ten);
 }
