@@ -32,6 +32,6 @@ public class KhachHang {
     private String maKH;
 
     @Column(name = "trangThai")
-    private boolean trangThai;
+    private Boolean trangThai;
 
 }
