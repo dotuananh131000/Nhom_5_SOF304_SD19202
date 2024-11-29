@@ -2,6 +2,7 @@ package com.example.asignment_gd2.controller;
 
 import com.example.asignment_gd2.model.KhachHang;
 import com.example.asignment_gd2.repository.KhachHangRepository;
+import com.example.asignment_gd2.service.KhachHangService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,13 +19,19 @@ import java.util.ArrayList;
 @RequestMapping("/khachhang")
 public class KhachHangController {
 
-    @Autowired
-    private KhachHangRepository khachHangRepository;
+   private KhachHangService khachHangService;
+
+   private KhachHangRepository khachHangRepository;
+
+    public KhachHangController(KhachHangService khachHangService, KhachHangRepository khachHangRepository) {
+        this.khachHangService = khachHangService;
+        this.khachHangRepository = khachHangRepository;
+    }
 
     @GetMapping("/show")
     public String showKhachHang(@RequestParam(defaultValue = "0") int page, Model model) {
         Pageable pageable = PageRequest.of(page, 5);
-        Page<KhachHang> khachHangPage = khachHangRepository.findAll(pageable);
+        Page<KhachHang> khachHangPage = khachHangService.findAll(pageable);
 
         model.addAttribute("list_KhachHang", khachHangPage.getContent());
         model.addAttribute("currentPage", khachHangPage.getNumber());
