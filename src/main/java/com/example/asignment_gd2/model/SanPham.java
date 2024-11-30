@@ -31,4 +31,7 @@ public class SanPham {
     @Column(name = "trangThai")
     private boolean trangThai;
 
+    public SanPham(String sp008, String áo_thun, boolean b) {
+
+    }
 }
