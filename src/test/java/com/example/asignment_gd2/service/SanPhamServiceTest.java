@@ -193,6 +193,73 @@ class SanPhamServiceTest {
                 "Danh sách sản phẩm phải trống sau khi xóa sản phẩm cuối cùng");
     }
 
+    @Test
+    public void testCreateSanPham_ValidNameWithSpaces_ShouldAddProduct() {
+        SanPham product = new SanPham(1, "SP001", "Áo sơ mi trắng", true);
+        SanPham createdProduct = sanPhamService.createSanPham(product);
+        assertEquals("Áo sơ mi trắng", createdProduct.getTen(), "Tên sản phẩm không khớp");
+    }
+
+    @Test
+    public void testCreateSanPham_EmptyCode_ShouldThrowException() {
+        SanPham product = new SanPham(1, "", "Áo sơ mi", true);
+        assertThrows(IllegalArgumentException.class, () -> sanPhamService.createSanPham(product),
+                "Mã sản phẩm không được trống");
+    }
+
+    @Test
+    public void testCreateSanPham_LongName_ShouldThrowException() {
+        String longName = "A".repeat(101); // Tên dài 101 ký tự
+        SanPham product = new SanPham(1, "SP001", longName, true);
+        assertThrows(IllegalArgumentException.class, () -> sanPhamService.createSanPham(product),
+                "Tên sản phẩm không được quá 100 ký tự");
+    }
+
+    @Test
+    public void testDeleteSanPham_MultipleProducts_ShouldRemoveCorrectProduct() {
+        sanPhamService.createSanPham(new SanPham(1, "SP001", "Áo sơ mi", true));
+        sanPhamService.createSanPham(new SanPham(2, "SP002", "Áo thun", true));
+        sanPhamService.deleteSanPham(1);
+        assertThrows(IllegalArgumentException.class, () -> sanPhamService.getSanPhamById(1),
+                "Không tìm thấy sản phẩm");
+    }
+
+    @Test
+    public void testGetSanPhamById_NegativeId_ShouldThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> sanPhamService.getSanPhamById(-1),
+                "ID không hợp lệ");
+    }
+
+    @Test
+    public void testCreateSanPham_CodeWithSpace_ShouldThrowException() {
+        SanPham product = new SanPham(1, "SP 001", "Áo sơ mi", true);
+        assertThrows(IllegalArgumentException.class, () -> sanPhamService.createSanPham(product),
+                "Mã sản phẩm không được chứa dấu cách");
+    }
+
+    @Test
+    public void testCreateSanPham_NameWithInvalidCharacters_ShouldThrowException() {
+        SanPham product = new SanPham(1, "SP001", "Áo sơ mi @$%", true);
+        assertThrows(IllegalArgumentException.class, () -> sanPhamService.createSanPham(product),
+                "Tên sản phẩm không được chứa ký tự đặc biệt @$%");
+    }
+
+    @Test
+    public void testDeleteSanPham_ProductNotExist_ShouldThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> sanPhamService.deleteSanPham(1),
+                "Sản phẩm không tồn tại");
+    }
+
+    @Test
+    public void testGetSanPhamById_AfterDelete_ShouldThrowException() {
+        sanPhamService.createSanPham(new SanPham(1, "SP001", "Áo sơ mi", true));
+        sanPhamService.deleteSanPham(1);
+        assertThrows(IllegalArgumentException.class, () -> sanPhamService.getSanPhamById(1),
+                "Sản phẩm không tồn tại");
+    }
+
+
+
 
 
 }

@@ -32,6 +32,5 @@ public class SanPham {
     private boolean trangThai;
 
     public SanPham(String sp008, String áo_thun, boolean b) {
-
     }
 }
