@@ -82,4 +82,5 @@ public class SanPhamChiTietController {
         return "sanphamchitiet/detail";
     }
 
+
 }
